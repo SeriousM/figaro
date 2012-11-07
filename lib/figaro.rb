@@ -1,11 +1,11 @@
-require "figaro/env"
-require "figaro/railtie"
+require 'figaro/env'
+require 'figaro/railtie'
 
 module Figaro
   extend self
 
   def vars(custom_environment = nil)
-    env(custom_environment).map{|k,v| "#{k}=#{v}" }.sort.join(" ")
+    env(custom_environment).map{|k,v| "#{k}=#{v}" }.sort.join(' ')
   end
 
   def env(custom_environment = nil)
@@ -14,7 +14,7 @@ module Figaro
   end
 
   def raw
-    @raw ||= yaml && YAML.load(yaml) || {}
+    @raw ||= yaml && YAML.load( ERB.new(yaml).result ) || {}
   end
 
   def yaml
@@ -22,7 +22,7 @@ module Figaro
   end
 
   def path
-    @path ||= Rails.root.join("config/application.yml")
+    @path ||= Rails.root.join('config/application.yml')
   end
 
   def environment
@@ -30,7 +30,6 @@ module Figaro
   end
 
   private
-
   def flatten(hash)
     hash.reject{|_,v| Hash === v }
   end
